@@ -1,0 +1,64 @@
+# Excel Import Guide for AnytimeEsim
+
+## Required Columns for Excel File
+
+Your Excel file must contain columns with these keywords (case-insensitive):
+
+1. **Data plan name** - Plan name (e.g., "1GB 7 Days", "5GB 30 Days")
+   - Accepts: name, data plan name, plan name, plan
+   
+2. **Price (USD)** - Plan price as number (e.g., 9.99, 19.99, 29.99)
+   - Accepts: price, price (usd), price usd, cost
+   
+3. **Data type** - Data amount with unit (e.g., "1GB", "5GB", "10GB", "Unlimited")
+   - Accepts: data_amount, data amount, data, data type
+   
+4. **validity** - Validity period in days (e.g., 7, 30, 90)
+   - Accepts: validity_days, validity, validity days, days
+   
+5. **Country code** - Comma-separated country codes (e.g., "US,CA,UK", "US", "CA,UK,AU")
+   - Accepts: countries, country, country code, country codes
+
+## Optional Columns
+
+6. **description** - Plan description (text)
+7. **is_active** - Boolean (True/False) for plan status
+
+## Example Excel Data
+
+| Data plan name | Price (USD) | Data type | validity | Country code | description | is_active |
+|----------------|-------------|-----------|----------|--------------|-------------|-----------|
+| 1GB 7 Days | 9.99 | 1GB | 7 | US,CA | Basic plan for short trips | True |
+| 5GB 30 Days | 19.99 | 5GB | 30 | US,CA,UK | Popular plan for travelers | True |
+| 10GB 30 Days | 29.99 | 10GB | 30 | US,CA,UK,AU | Premium plan for heavy users | True |
+| Unlimited 30 Days | 49.99 | Unlimited | 30 | US,CA | Unlimited data plan | True |
+
+## Country Codes
+
+Use standard 2-letter ISO country codes:
+- US - United States
+- CA - Canada
+- UK - United Kingdom
+- AU - Australia
+- DE - Germany
+- FR - France
+- etc.
+
+## Notes
+
+- The import will update existing plans with the same name
+- New plans will be created if the name doesn't exist
+- Column names are case-insensitive (Price = price = PRICE)
+- Multiple column name variations are supported for each field
+- Country codes are case-insensitive (US = us = Us)
+- Missing countries will show warnings but won't stop the import
+- Empty cells in optional columns will use default values
+
+## Accessing the Import Tool
+
+1. Go to Admin Panel: `/admin/`
+2. Click on "Orders" in the left menu
+3. Click "Admin Tools" at the top
+4. Click "Import from Excel"
+
+Or directly visit: `/admin/esim_store/bulk-delete/`

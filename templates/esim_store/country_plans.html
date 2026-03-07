@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}AnytimeEsim - {{ country.name }} Plans{% endblock %}
+
+{% block content %}
+<!-- Banner Section -->
+<section class="banner">
+    <div class="container">
+        <h1 class="fade-in">{{ country.name }} eSIM Plans</h1>
+        <p class="fade-in">Stay connected in {{ country.name }} with our reliable eSIM solutions</p>
+        <a href="{% url 'countries' %}" class="btn btn-primary fade-in">Back to Countries</a>
+    </div>
+</section>
+
+<!-- Products Grid -->
+<section class="products-grid">
+    <div class="container">
+        <div class="row" id="products-container">
+            {% for plan in plans %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="product-card fade-in">
+                        <div class="product-image">
+                            {% if plan.image %}
+                                <img src="{{ plan.image.url }}" alt="{{ plan.name }}">
+                            {% else %}
+                                <div class="placeholder-image">
+                                    <i class="fas fa-sim-card fa-3x text-muted"></i>
+                                </div>
+                            {% endif %}
+                            <div class="product-badge">{{ plan.data_amount }}</div>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">{{ plan.name }}</h3>
+                            <div class="product-meta">
+                                <span><i class="fas fa-globe me-1"></i>{{ plan.countries.all|join:", " }}</span>
+                                <span><i class="fas fa-clock me-1"></i>{{ plan.validity_days }} days</span>
+                            </div>
+                            <p class="product-price">${{ plan.price }}</p>
+                            <a href="#" class="btn buy-btn" data-plan-id="{{ plan.id }}">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No eSIM plans available for {{ country.name }} at this time.
+                    </div>
+                    <a href="{% url 'countries' %}" class="btn btn-primary">Browse Other Countries</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

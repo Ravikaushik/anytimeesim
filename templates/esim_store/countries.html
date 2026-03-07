@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}AnytimeEsim - Countries{% endblock %}
+
+{% block content %}
+<!-- Banner Section -->
+<section class="banner">
+    <div class="container">
+        <h1 class="fade-in">Browse by Country</h1>
+        <p class="fade-in">Find the perfect eSIM plan for your destination</p>
+    </div>
+</section>
+
+<!-- World Pack Section -->
+{% if world_pack_plans %}
+<section class="world-pack-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="world-pack-title">🌍 World Pack</h2>
+            <p class="world-pack-subtitle">Popular plans that work in multiple countries</p>
+        </div>
+        <div class="row">
+            {% for plan in world_pack_plans %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="world-pack-card fade-in">
+                        <div class="world-pack-image">
+                            {% if plan.image %}
+                                <img src="{{ plan.image.url }}" alt="{{ plan.name }}">
+                            {% else %}
+                                <div class="placeholder-image">
+                                    <i class="fas fa-globe fa-2x text-primary"></i>
+                                </div>
+                            {% endif %}
+                            <div class="plan-details-overlay">
+                                <div class="data-validity">
+                                    <span class="data-badge">{{ plan.data_amount }}</span>
+                                    <span class="validity-badge">{{ plan.validity_days }} days</span>
+                                </div>
+                                <div class="price-tag">${{ plan.price }}</div>
+                            </div>
+                        </div>
+                        <div class="world-pack-content">
+                            <h4 class="world-pack-name">{{ plan.name }}</h4>
+                            <div class="world-pack-countries">
+                                {% for country in plan.countries.all %}
+                                    <span class="country-tag">{{ country.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <a href="{% url 'home' %}?search={{ plan.name }}" class="btn btn-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Countries Grid -->
+<section class="products-grid">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Browse by Country</h2>
+            <p class="section-subtitle">Find plans available in specific countries</p>
+        </div>
+        <div class="row">
+            {% for country in countries %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <a href="{% url 'country_plans' country.code %}" class="text-decoration-none">
+                        <div class="product-card fade-in">
+                            <div class="product-image">
+                                {% if country.flag_image %}
+                                    <img src="{{ country.flag_image.url }}" alt="{{ country.name }} Flag">
+                                {% else %}
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-flag fa-3x text-muted"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">{{ country.name }}</h3>
+                                <p class="text-muted">View Plans</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

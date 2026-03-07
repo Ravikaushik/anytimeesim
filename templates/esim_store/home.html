@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}AnytimeEsim - Global eSIM Plans{% endblock %}
+
+{% block content %}
+<!-- Banner Section -->
+<section class="banner">
+    <div class="container">
+        <h1 class="fade-in">Stay Connected Worldwide</h1>
+        <p class="fade-in">Instant eSIM activation for 100+ countries. No physical SIM cards needed.</p>
+        <a href="{% url 'countries' %}" class="btn btn-primary fade-in">Browse Plans</a>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+    <div class="container">
+        <div class="filter-container">
+            <div class="filter-group">
+                <label for="country-filter">Country:</label>
+                <select id="country-filter" name="country">
+                    <option value="">All Countries</option>
+                    {% for country in countries %}
+                        <option value="{{ country.code }}" {% if selected_country == country.code %}selected{% endif %}>
+                            {{ country.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="price-filter">Price:</label>
+                <select id="price-filter" name="price">
+                    <option value="">All Prices</option>
+                    <option value="under_10" {% if selected_price == 'under_10' %}selected{% endif %}>Under $10</option>
+                    <option value="10_20" {% if selected_price == '10_20' %}selected{% endif %}>$10 - $20</option>
+                    <option value="20_50" {% if selected_price == '20_50' %}selected{% endif %}>$20 - $50</option>
+                    <option value="over_50" {% if selected_price == 'over_50' %}selected{% endif %}>Over $50</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <button id="reset-filters" class="btn btn-outline-primary">Reset Filters</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Grid -->
+<section class="products-grid">
+    <div class="container">
+        <div class="row" id="products-container">
+            {% for plan in plans %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="product-card fade-in">
+                        <div class="product-image">
+                            {% if plan.image %}
+                                <img src="{{ plan.image.url }}" alt="{{ plan.name }}">
+                            {% else %}
+                                <div class="placeholder-image">
+                                    <i class="fas fa-sim-card fa-2x text-muted"></i>
+                                </div>
+                            {% endif %}
+                            <div class="plan-details-overlay">
+                                <div class="validity-badge">{{ plan.validity_days }} days</div>
+                                <div class="price-tag">${{ plan.price }}</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">{{ plan.name }}</h3>
+                            <div class="product-meta">
+                                <span><i class="fas fa-globe me-1"></i>{{ plan.countries.all|join:", " }}</span>
+                                <span><i class="fas fa-clock me-1"></i>{{ plan.validity_days }} days</span>
+                            </div>
+                            <p class="product-price">${{ plan.price }}</p>
+                            <a href="#" class="btn buy-btn" data-plan-id="{{ plan.id }}">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No eSIM plans found. Try adjusting your filters or search criteria.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading plans...</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const countryFilter = document.getElementById('country-filter');
+    const priceFilter = document.getElementById('price-filter');
+    const resetBtn = document.getElementById('reset-filters');
+    const productsContainer = document.getElementById('products-container');
+    const loading = document.getElementById('loading');
+    
+    // Filter change event listeners
+    countryFilter.addEventListener('change', applyFilters);
+    priceFilter.addEventListener('change', applyFilters);
+    resetBtn.addEventListener('click', resetFilters);
+    
+    function applyFilters() {
+        const country = countryFilter.value;
+        const price = priceFilter.value;
+        
+        // Show loading
+        loading.classList.add('show');
+        productsContainer.innerHTML = '';
+        
+        // Build URL with filters
+        let url = '?';
+        if (country) url += `country=${country}&`;
+        if (price) url += `price=${price}&`;
+        
+        // Redirect to apply filters
+        window.location.href = url;
+    }
+    
+    function resetFilters() {
+        countryFilter.value = '';
+        priceFilter.value = '';
+        window.location.href = '/';
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+# AnytimeEsim Admin Panel Access Guide
+
+## 🚀 **How to Access Excel Import & Bulk Delete Features**
+
+### **Method 1: Direct Access (Recommended)**
+1. Go to Admin Panel: `http://localhost:8000/admin/`
+2. Click on **"ESIM Plans"** in the left sidebar
+3. You'll see **two prominent buttons** at the top:
+   - **"Import from Excel"** - Upload and import plans from Excel
+   - **"Bulk Delete All Plans"** - Delete all plans at once
+
+### **Method 2: Direct URLs**
+- **Excel Import:** `http://localhost:8000/admin/esim_store/import-excel/`
+- **Bulk Delete:** `http://localhost:8000/admin/esim_store/bulk-delete/`
+- **Admin Tools Dashboard:** `http://localhost:8000/admin/esim_store/admin-tools/`
+
+### **Method 3: Through Admin Tools**
+1. Go to Admin Panel: `http://localhost:8000/admin/`
+2. Click on **"ESIM Plans"** in the left sidebar
+3. Click **"Admin Tools"** at the top of the page
+4. Use the buttons in the dashboard
+
+## 📋 **Excel File Format**
+
+### **Required Columns (Flexible Naming):**
+- **Data plan name** - Plan name (e.g., "1GB 7 Days")
+  - Accepts: name, data plan name, plan name, plan
+- **Price (USD)** - Plan price (e.g., 9.99)
+  - Accepts: price, price (usd), price usd, cost
+- **Data type** - Data amount (e.g., "1GB", "5GB")
+  - Accepts: data_amount, data amount, data, data type
+- **validity** - Validity in days (e.g., 7, 30, 90)
+  - Accepts: validity_days, validity, validity days, days
+- **Country code** - Country codes (e.g., "US,CA,UK")
+  - Accepts: countries, country, country code, country codes
+
+### **Example Excel Headers:**
+```
+| Data plan name | Price (USD) | Data type | validity | Country code |
+|----------------|-------------|-----------|----------|--------------|
+| 1GB 7 Days     | 9.99        | 1GB       | 7        | US,CA        |
+| 5GB 30 Days    | 19.99       | 5GB       | 30       | US,CA,UK     |
+```
+
+## 🎯 **What Each Feature Does:**
+
+### **Excel Import:**
+- **Updates existing plans** with the same name
+- **Creates new plans** if the name doesn't exist
+- **Assigns countries** based on country codes
+- **Shows import statistics** (created/updated/errors)
+- **Handles errors gracefully** with detailed messages
+
+### **Bulk Delete:**
+- **Deletes ALL plans** from the database
+- **Requires confirmation** with checkbox
+- **Shows current plan count** before deletion
+- **Cannot be undone** - use with extreme caution!
+
+### **Admin Tools Dashboard:**
+- **Quick stats** display (plan count, country count, orders)
+- **Direct access** to all admin tools
+- **Real-time statistics** from your database
+
+## 🔧 **Troubleshooting:**
+
+### **If buttons don't appear:**
+1. Make sure you're logged into the admin panel
+2. Make sure you're on the **ESIM Plans** page (not Orders)
+3. Clear your browser cache and refresh
+
+### **If Excel import fails:**
+1. Check that your Excel file has the required columns
+2. Verify column names match one of the accepted variations
+3. Ensure country codes are valid 2-letter ISO codes
+4. Check that price values are numbers, not text
+
+### **If URLs don't work:**
+1. Make sure the Django development server is running
+2. Verify you're using the correct port (usually 8000)
+3. Check that you're logged into the admin panel first
+
+## 📁 **Files Created:**
+- `esim_store/forms.py` - Form definitions
+- `templates/admin/esim_store/esimplan/import_excel.html` - Import interface
+- `templates/admin/esim_store/esimplan/bulk_delete.html` - Delete interface
+- `templates/admin/esim_store/admin_tools.html` - Dashboard
+- `templates/admin/esim_store/esimplan/change_list.html` - Custom admin page with buttons
+- `EXCEL_IMPORT_GUIDE.txt` - Detailed Excel format guide
+- `ADMIN_ACCESS_GUIDE.txt` - This file
+
+## ✅ **Quick Start:**
+1. **Create Superuser:** `python manage.py createsuperuser`
+2. **Start Server:** `python manage.py runserver`
+3. **Go to Admin:** `http://localhost:8000/admin/`
+4. **Click ESIM Plans** in left menu
+5. **Use the buttons** at the top of the page!
+
+The Excel import feature is now fully functional and easily accessible through the ESIM Plans admin interface!

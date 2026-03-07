@@ -1,0 +1,102 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+    &rsaquo; <a href="{% url 'admin:esim_store_esimplan_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+    &rsaquo; {{ title }}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<div class="module">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-row">
+            <div class="fieldBox">
+                {{ form.excel_file.label_tag }}
+                {{ form.excel_file }}
+                {% if form.excel_file.help_text %}
+                    <div class="help">{{ form.excel_file.help_text|safe }}</div>
+                {% endif %}
+                {% if form.excel_file.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.excel_file.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="submit-row">
+            <p class="help">Excel file format requirements:</p>
+            <ul>
+                <li><strong>name:</strong> Plan name (e.g., "1GB 7 Days")</li>
+                <li><strong>price:</strong> Plan price (e.g., 9.99)</li>
+                <li><strong>data_amount:</strong> Data amount (e.g., "1GB", "5GB")</li>
+                <li><strong>validity_days:</strong> Validity in days (e.g., 7, 30)</li>
+                <li><strong>countries:</strong> Comma-separated country codes (e.g., "US,CA,UK")</li>
+                <li><strong>description:</strong> Optional plan description</li>
+                <li><strong>is_active:</strong> Optional boolean (True/False) for plan status</li>
+            </ul>
+            
+            <div class="submit-row">
+                <input type="submit" value="Import Plans" class="default" name="_save">
+                <a href="{% url 'admin:esim_store_esimplan_changelist' %}" class="default">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .help {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+    ul {
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+    li {
+        margin-bottom: 5px;
+    }
+    .submit-row {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 1px solid #ccc;
+    }
+    .submit-row input[type="submit"] {
+        background-color: #007cba;
+        border-color: #005a87;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .submit-row input[type="submit"]:hover {
+        background-color: #005a87;
+    }
+    a.default {
+        background-color: #f3f3f3;
+        border: 1px solid #ccc;
+        color: #333;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+    a.default:hover {
+        background-color: #e3e3e3;
+    }
+</style>
+
+{% endblock %}

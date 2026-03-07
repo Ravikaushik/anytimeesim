@@ -1,0 +1,55 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group" role="group">
+                <a href="{% url 'admin:esim_store_import_excel' %}" class="btn btn-primary">
+                    <i class="fas fa-file-excel"></i> Import from Excel
+                </a>
+                <a href="{% url 'admin:esim_store_bulk_delete' %}" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Bulk Delete All Plans
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{{ block.super }}
+{% endblock %}
+
+{% block result_list %}
+<style>
+    .btn-group {
+        margin-bottom: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    .btn-primary {
+        background-color: #007cba;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #005a87;
+    }
+    .btn-danger {
+        background-color: #d63031;
+        color: white;
+    }
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+    .btn i {
+        margin-right: 8px;
+    }
+</style>
+{{ block.super }}
+{% endblock %}

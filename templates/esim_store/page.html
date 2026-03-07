@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}AnytimeEsim - {{ content.title }}{% endblock %}
+
+{% block content %}
+<!-- Banner Section -->
+<section class="banner">
+    <div class="container">
+        <h1 class="fade-in">{{ content.title }}</h1>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section class="products-grid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="content-block">
+                    {{ content.content|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
