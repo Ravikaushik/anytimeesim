@@ -127,7 +127,7 @@ class ESIMPlanAdmin(admin.ModelAdmin):
                                         country = Country.objects.get(code=code.upper())
                                         plan.countries.add(country)
                                     except Country.DoesNotExist:
-                                        messages.warning(request, f'Country code "{code}" not found for plan "{row[column_mapping['name']]}"')
+                                        messages.warning(request, f'Country code "{code}" not found for plan "{row[column_mapping["name"]]}"')
                         
                         except Exception as e:
                             error_count += 1
