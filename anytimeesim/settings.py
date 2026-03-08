@@ -34,6 +34,12 @@ if ALLOWED_HOSTS_ENV:
 else:
     ALLOWED_HOSTS = ['*']  # Allow all hosts if not specified
 
+# Read DEBUG from environment variable
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+
+# Read SECRET_KEY from environment variable
+SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
+
 
 # Application definition
 
