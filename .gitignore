@@ -5,10 +5,6 @@ __pycache__/
 *.so
 
 # Django
-*.log
-*.pot
-*.py[co]
-manage.py
 db.sqlite3
 db.sqlite3-journal
 media/
@@ -29,6 +25,10 @@ staticfiles/
 .DS_Store
 Thumbs.db
 
-# Virtual environment
-venv/
-env/
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
