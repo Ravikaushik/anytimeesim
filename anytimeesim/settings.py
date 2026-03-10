@@ -27,12 +27,11 @@ DEBUG = False
 
 import os
 
-# Read ALLOWED_HOSTS from environment variable
-ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', '')
-if ALLOWED_HOSTS_ENV:
-    # ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_ENV.split(',')]
-# else:
-    ALLOWED_HOSTS = ['*']  # Allow all hosts if not specified
+# ALLOWED HOSTS
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "anytimeesim-1.onrender.com,anytimeesim-production.up.railway.app,localhost,127.0.0.1"
+).split(",")
 
 # Read DEBUG from environment variable
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
