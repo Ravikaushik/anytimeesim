@@ -30,7 +30,7 @@ import os
 # ALLOWED HOSTS
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
-    "anytimeesim-1.onrender.com,anytimeesim-production.up.railway.app,localhost,127.0.0.1"
+    "anytimeesim.com,www.anytimeesim.com,anytimeesim-1.onrender.com,anytimeesim-production.up.railway.app,localhost,127.0.0.1"
 ).split(",")
 
 # Read DEBUG from environment variable
